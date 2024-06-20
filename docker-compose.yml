@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "9999:80"
+      - "8083:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d:rw
       - wordpress:/var/www/html
@@ -32,7 +32,7 @@ services:
           "localhost",
           "-u",
           "root",
-          "-p$$DATABASE_ROOT_PASSWORD"
+          "-p$$DATABASE_ROOT_PASSWORD",
         ]
       timeout: 20s
       retries: 10
@@ -64,9 +64,9 @@ services:
     env_file: .env
     environment:
       WORDPRESS_DB_HOST: database:3306 # use the same name as database service
-      WORDPRESS_DB_NAME: '${DATABASE_NAME}'
-      WORDPRESS_DB_USER: '${DATABASE_USER}'
-      WORDPRESS_DB_PASSWORD: '${DATABASE_PASSWORD}'
+      WORDPRESS_DB_NAME: "${DATABASE_NAME}"
+      WORDPRESS_DB_USER: "${DATABASE_USER}"
+      WORDPRESS_DB_PASSWORD: "${DATABASE_PASSWORD}"
     volumes:
       - wordpress:/var/www/html
       # - ./src:/var/www/html/wp-content:rw
@@ -76,7 +76,6 @@ services:
 volumes:
   dbdata:
   wordpress:
-
 
 networks:
   internal:
